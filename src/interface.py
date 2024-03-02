@@ -1,8 +1,10 @@
 # imports
 import streamlit as st
-from datetime import datetime as dt
-from light import Light
+import time
 from default_params import *
+
+# import raspberry pi objects
+from pi_objects import *
 
 # light activation
 sunrise = st.time_input(
@@ -22,3 +24,17 @@ sunset = st.time_input(
 # display GUI
 st.write(sunrise)
 st.write(sunset)
+
+# tent control
+while True:
+    time_now = dt.datetime.now()
+    # control light
+    if time_now.time > sunrise and time_now < sunset:
+        if not my_light.value:
+            my_light.on()
+    else:
+        if my_light.value:
+            my_light.off()
+
+    time.sleep(1)
+
