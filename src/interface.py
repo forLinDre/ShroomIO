@@ -28,13 +28,22 @@ st.write(sunset)
 # tent control
 while True:
     time_now = dt.datetime.now()
+    st.write(time_now)
     # control light
     if time_now.time() > sunrise and time_now.time() < sunset:
+        st.write('light should be turning on')
         if not my_light.value:
+            st.write('light is off but needs to be turned on')
             my_light.on()
+        else:
+            st.write('light is on and does not need to be turned on')
     else:
         if my_light.value:
+            st.write('light is on and needs to be turned off')
             my_light.off()
+        else:
+            st.write('light is off and does not need to be turned on')
 
     time.sleep(1)
+    st.write('sleeping one second')
 
