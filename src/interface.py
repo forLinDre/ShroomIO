@@ -9,17 +9,20 @@ from pi_objects import *
 # light activation
 manual_lc = st.checkbox(
     label='manual light control',
+    key=1,
     value=False
 )
 
 light_on = st.checkbox(
-    label='manual light control',
+    label='light on',
+    key=2,
     value=False
 )
 
 
 sunrise = st.time_input(
     label='sunrise:',
+    key=1,
     value=light_on_time,
     help='set your grow light on time (sunrise)',
     step=dt.timedelta(minutes=1)
@@ -27,6 +30,7 @@ sunrise = st.time_input(
 
 sunset = st.time_input(
     label='sunset:',
+    key=2,
     value=light_off_time,
     help='set your grow light off time (sunset)',
     step=dt.timedelta(minutes=1)
