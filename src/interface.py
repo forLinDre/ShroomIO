@@ -58,6 +58,6 @@ while True:
         if light_on and not my_light.value:
             my_light.on()
         else:
-            if my_light:
+            if my_light.value:
                 my_light.off()
 
