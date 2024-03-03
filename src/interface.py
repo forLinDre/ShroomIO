@@ -29,7 +29,7 @@ st.write(sunset)
 while True:
     time_now = dt.datetime.now()
     # control light
-    if time_now.time > sunrise and time_now < sunset:
+    if time_now.time() > sunrise and time_now.time() < sunset:
         if not my_light.value:
             my_light.on()
     else:
