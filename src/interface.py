@@ -22,7 +22,7 @@ light_on = st.checkbox(
 
 sunrise = st.time_input(
     label='sunrise:',
-    key=1,
+    key=3,
     value=light_on_time,
     help='set your grow light on time (sunrise)',
     step=dt.timedelta(minutes=1)
@@ -30,7 +30,7 @@ sunrise = st.time_input(
 
 sunset = st.time_input(
     label='sunset:',
-    key=2,
+    key=4,
     value=light_off_time,
     help='set your grow light off time (sunset)',
     step=dt.timedelta(minutes=1)
