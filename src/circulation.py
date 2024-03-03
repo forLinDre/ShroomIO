@@ -1,5 +1,5 @@
 # imports
-from pwm import PWM
+from src.pi.pwm import PWM
 
 
 class Circulation(PWM):

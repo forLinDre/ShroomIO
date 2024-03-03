@@ -1,5 +1,5 @@
 # imports
-from on_off_relay import OFRelay
+from src.pi.on_off_relay import OFRelay
 
 
 class Light(OFRelay):
