@@ -1,3 +1,3 @@
 from light import Light
 
-my_light = Light(30)
+my_light = Light(17)
