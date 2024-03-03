@@ -7,6 +7,17 @@ from default_params import *
 from pi_objects import *
 
 # light activation
+manual_lc = st.checkbox(
+    label='manual light control',
+    value=False
+)
+
+light_on = st.checkbox(
+    label='manual light control',
+    value=False
+)
+
+
 sunrise = st.time_input(
     label='sunrise:',
     value=light_on_time,
@@ -22,31 +33,26 @@ sunset = st.time_input(
 )
 
 # display GUI
+st.write(manual_lc)
 st.write(sunrise)
 st.write(sunset)
 
 # tent control
 while True:
-    my_light.on()
-    time.sleep(1)
-    my_light.off()
-    time.sleep(1)
-    st.write('sleeping one second')
-
-"""
     time_now = dt.datetime.now()
-    st.write(time_now)
     # control light
-    if time_now.time() > sunrise and time_now.time() < sunset:
-        st.write('light should be turning on')
-        if not my_light.value:
-            st.write('light is off but needs to be turned on')
+    if not manual_lc:
+        if time_now.time() > sunrise and time_now.time() < sunset:
+            if not my_light.value:
+                my_light.on()
+        else:
+            if my_light.value:
+                my_light.off()
+    else:
+        st.write(light_on)
+
+        if light_on:
             my_light.on()
         else:
-            st.write('light is on and does not need to be turned on')
-    else:
-        if my_light.value:
-            st.write('light is on and needs to be turned off')
             my_light.off()
-        else:
-            st.write('light is off and does not need to be turned on')"""
+
