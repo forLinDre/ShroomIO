@@ -44,17 +44,8 @@ st.write(sunset)
 while True:
     if manual_lc:
         print('manual light control on')
-        if light_on:
-            print('manual light control on')
-            if not my_light.value:
-                my_light.on()
-            else:
-                print('light already on')
-        else:
-            print('manual light control off')
     else:
         print('manual light control off')
-
     time.sleep(5)
 
 # tent control
