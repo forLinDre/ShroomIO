@@ -41,22 +41,38 @@ st.write(light_on)
 st.write(sunrise)
 st.write(sunset)
 
-# tent control
 while True:
-    time_now = dt.datetime.now()
-    # control light
-    if not manual_lc:
-        if time_now.time() > sunrise and time_now.time() < sunset:
-            if not my_light.value:
-                my_light.on()
-        else:
-            if my_light.value:
-                my_light.off()
-    else:
+    if manual_lc:
+        print('manual light control on')
         if light_on:
+            print('manual light control on')
             if not my_light.value:
                 my_light.on()
+            else:
+                print('light already on')
         else:
-            if my_light.value:
-                my_light.off()
+            print('manual light control off')
+    else:
+        print('manual light control off')
+
+    time.sleep(5)
+
+# tent control
+# while True:
+#     time_now = dt.datetime.now()
+#     # control light
+#     if not manual_lc:
+#         if time_now.time() > sunrise and time_now.time() < sunset:
+#             if not my_light.value:
+#                 my_light.on()
+#         else:
+#             if my_light.value:
+#                 my_light.off()
+#     else:
+#         if light_on:
+#             if not my_light.value:
+#                 my_light.on()
+#         else:
+#             if my_light.value:
+#                 my_light.off()
 
