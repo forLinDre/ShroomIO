@@ -27,6 +27,13 @@ st.write(sunset)
 
 # tent control
 while True:
+    my_light.on()
+    time.sleep(1)
+    my_light.off()
+    time.sleep(1)
+    st.write('sleeping one second')
+
+"""
     time_now = dt.datetime.now()
     st.write(time_now)
     # control light
@@ -42,8 +49,4 @@ while True:
             st.write('light is on and needs to be turned off')
             my_light.off()
         else:
-            st.write('light is off and does not need to be turned on')
-
-    time.sleep(1)
-    st.write('sleeping one second')
-
+            st.write('light is off and does not need to be turned on')"""
