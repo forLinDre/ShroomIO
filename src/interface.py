@@ -19,7 +19,6 @@ light_on = st.checkbox(
     value=False
 )
 
-
 sunrise = st.time_input(
     label='sunrise:',
     key=3,
@@ -38,6 +37,7 @@ sunset = st.time_input(
 
 # display GUI
 st.write(manual_lc)
+st.write(light_on)
 st.write(sunrise)
 st.write(sunset)
 
@@ -53,10 +53,9 @@ while True:
             if my_light.value:
                 my_light.off()
     else:
-        st.write(light_on)
-
-        if light_on and not my_light.value:
-            my_light.on()
+        if light_on:
+            if not my_light.value:
+                my_light.on()
         else:
             if my_light.value:
                 my_light.off()
