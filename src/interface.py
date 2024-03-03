@@ -55,8 +55,9 @@ while True:
     else:
         st.write(light_on)
 
-        if light_on:
+        if light_on and not my_light.value:
             my_light.on()
         else:
-            my_light.off()
+            if my_light:
+                my_light.off()
 
