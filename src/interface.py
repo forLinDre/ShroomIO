@@ -38,8 +38,8 @@ light_on = st.checkbox(
 # display GUI
 st.write(manual_lc)
 st.write(light_on)
-st.write(sunrise)
-st.write(sunset)
+# st.write(sunrise)
+# st.write(sunset)
 
 while True:
     if manual_lc:
