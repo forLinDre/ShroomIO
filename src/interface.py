@@ -14,26 +14,26 @@ manual_lc = st.checkbox(
 )
 
 light_on = st.checkbox(
-    label='light on',
+    label='manual light control light on',
     key=2,
     value=False
 )
 
-sunrise = st.time_input(
-    label='sunrise:',
-    key=3,
-    value=light_on_time,
-    help='set your grow light on time (sunrise)',
-    step=dt.timedelta(minutes=1)
-)
-
-sunset = st.time_input(
-    label='sunset:',
-    key=4,
-    value=light_off_time,
-    help='set your grow light off time (sunset)',
-    step=dt.timedelta(minutes=1)
-)
+# sunrise = st.time_input(
+#     label='sunrise:',
+#     key=3,
+#     value=light_on_time,
+#     help='set your grow light on time (sunrise)',
+#     step=dt.timedelta(minutes=1)
+# )
+#
+# sunset = st.time_input(
+#     label='sunset:',
+#     key=4,
+#     value=light_off_time,
+#     help='set your grow light off time (sunset)',
+#     step=dt.timedelta(minutes=1)
+# )
 
 # display GUI
 st.write(manual_lc)
