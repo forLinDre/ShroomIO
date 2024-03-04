@@ -53,12 +53,12 @@ while True:
             if my_light.value:
                 my_light.off()
     else:
-            if light_on:
-                if not my_light.value:
-                    my_light.on()
-            else:
-                if not my_light.off():
-                    my_light.off()
+        if light_on:
+            if not my_light.value:
+                my_light.on()
+        else:
+            if not my_light.value:
+                my_light.off()
 
     time.sleep(5)
 
