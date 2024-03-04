@@ -56,7 +56,6 @@ else:
         if not my_light.value:
             my_light.on()
     else:
-        if my_light.value:
-            print('')
+        if not my_light.off():
             my_light.off()
 
