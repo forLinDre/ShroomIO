@@ -42,21 +42,23 @@ st.write(sunrise)
 st.write(sunset)
 
 # tent control
-time_now = dt.datetime.now()
-# control light
-if not manual_lc:
+while True:
     time_now = dt.datetime.now()
-    if time_now.time() > sunrise and time_now.time() < sunset:
-        if not my_light.value:
-            my_light.on()
+    # control light
+    if not manual_lc:
+        if time_now.time() > sunrise and time_now.time() < sunset:
+            if not my_light.value:
+                my_light.on()
+        else:
+            if my_light.value:
+                my_light.off()
     else:
-        if my_light.value:
-            my_light.off()
-else:
-    if light_on:
-        if not my_light.value:
-            my_light.on()
-    else:
-        if not my_light.off():
-            my_light.off()
+            if light_on:
+                if not my_light.value:
+                    my_light.on()
+            else:
+                if not my_light.off():
+                    my_light.off()
+
+    time.sleep(5)
 
