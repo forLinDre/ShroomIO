@@ -45,6 +45,7 @@ st.write(sunset)
 time_now = dt.datetime.now()
 # control light
 if not manual_lc:
+    time_now = dt.datetime.now()
     if time_now.time() > sunrise and time_now.time() < sunset:
         if not my_light.value:
             my_light.on()
