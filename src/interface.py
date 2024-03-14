@@ -38,7 +38,7 @@ sunset = st.time_input(
 print(st.session_state.mlc)
 print(st.session_state.mlcON)
 print(manual_lc)
-print(my_light)
+print(light_on)
 
 # display GUI
 st.write(manual_lc)
