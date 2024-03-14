@@ -46,11 +46,16 @@ while True:
     time_now = dt.datetime.now()
     # control light
     if not manual_lc:
+        print('manual light control off')
         if time_now.time() > sunrise and time_now.time() < sunset:
+            print('at this time, light should be on')
             if not my_light.value:
+                print('light currently off, turning light on')
                 my_light.on()
         else:
+            print('at this time, light should be off')
             if my_light.value:
+                print('light currently on, turning light off')
                 my_light.off()
     else:
         print('manual light control')
