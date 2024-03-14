@@ -49,7 +49,7 @@ st.write(sunset)
 while True:
     time_now = dt.datetime.now()
     # control light
-    if not st.session_state.mlc:
+    if not st.session_state.manual_lc:
         if time_now.time() > st.session_state.sunrise and time_now.time() < st.session_state.sunset:
             if not my_light.value:
                 my_light.on()
@@ -57,7 +57,7 @@ while True:
             if my_light.value:
                 my_light.off()
     else:
-        if st.session_state.mlcON:
+        if st.session_state.light_on:
             if not my_light.value:
                 my_light.on()
         else:
