@@ -7,21 +7,25 @@ from default_params import *
 from pi_objects import *
 
 # light activation
-manual_lc = st.checkbox(
+manual_lc = st.toggle(
     label='manual light control',
-    key='mlc',
+    key='manual_lc',
     value=False
 )
 
-light_on = st.checkbox(
-    label='manual light control light on',
-    key='mlcON',
-    value=False
-)
+if st.session_state.manual_lc:
+    light_on = st.toggle(
+        label='manual light control light on',
+        key='light_on',
+        value=False
+    )
+else:
+    light_on = False
+    st.session_state['light_on'] = False
 
 sunrise = st.time_input(
     label='sunrise:',
-    key='sr',
+    key='sunrise',
     value=light_on_time,
     help='set your grow light on time (sunrise)',
     step=dt.timedelta(minutes=1)
@@ -29,16 +33,11 @@ sunrise = st.time_input(
 
 sunset = st.time_input(
     label='sunset:',
-    key='ss',
+    key='sunset',
     value=light_off_time,
     help='set your grow light off time (sunset)',
     step=dt.timedelta(minutes=1)
 )
-
-# print(st.session_state.mlc)
-# print(st.session_state.mlcON)
-# print(manual_lc)
-# print(light_on)
 
 # display GUI
 st.write(manual_lc)
@@ -51,32 +50,18 @@ while True:
     time_now = dt.datetime.now()
     # control light
     if not st.session_state.mlc:
-        # print('manual light control off')
-        if time_now.time() > sunrise and time_now.time() < sunset:
-            # print('at this time, light should be on')
+        if time_now.time() > st.session_state.sunrise and time_now.time() < st.session_state.sunset:
             if not my_light.value:
-                # print('light currently off, turning light on')
                 my_light.on()
         else:
-            # print('at this time, light should be off')
             if my_light.value:
-                # print('light currently on, turning light off')
                 my_light.off()
     else:
-        # print('manual light control')
         if st.session_state.mlcON:
-            # print('light on command')
-            # print(st.session_state.mlc)
-            # print(st.session_state.mlcON)
             if not my_light.value:
-                # print('light not on, turning on')
                 my_light.on()
         else:
-            # print('light off command')
-            # print(st.session_state.mlc)
-            # print(st.session_state.mlcON)
             if my_light.value:
-                # print('light on, turning off')
                 my_light.off()
 
     time.sleep(5)
