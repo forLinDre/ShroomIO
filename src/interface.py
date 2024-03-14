@@ -64,11 +64,15 @@ while True:
         print('manual light control')
         if light_on:
             print('light on command')
+            print(st.session_state.mlc)
+            print(st.session_state.mlcON)
             if not my_light.value:
                 print('light not on, turning on')
                 my_light.on()
         else:
             print('light off command')
+            print(st.session_state.mlc)
+            print(st.session_state.mlcON)
             if my_light.value:
                 print('light on, turning off')
                 my_light.off()
