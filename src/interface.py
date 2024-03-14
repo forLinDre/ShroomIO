@@ -53,11 +53,16 @@ while True:
             if my_light.value:
                 my_light.off()
     else:
+        print('manual light control')
         if light_on:
+            print('light on command')
             if not my_light.value:
+                print('light not on, turning on')
                 my_light.on()
         else:
-            if not my_light.value:
+            print('light off command')
+            if my_light.value:
+                print('light on, turning off')
                 my_light.off()
 
     time.sleep(5)
