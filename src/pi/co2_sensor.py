@@ -7,4 +7,4 @@ class MHZ19:
         pass
 
     def get_sample(self):
-        return mh_z19.read()
+        return mh_z19.read(serial_console_untouched=True)
