@@ -176,7 +176,7 @@ circ_fan = air_expander.slider(
 if 'env' not in st.session_state:
     env = Environment.start_capture()
     st.session_state['env'] = env
-    st.dataframe(st.session_state['env'].data)
+    st.plotly_chart(st.session_state['env'].data)
 else:
     env = st.session_state['env']
 
