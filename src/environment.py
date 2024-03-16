@@ -7,13 +7,25 @@ from pi.humidity_sensor import BME280
 
 
 class Environment:
-    def __init__(self, env_data):
+    def __init__(self, env_data, hum_temp=None, co2=None):
+        if hum_temp is not None:
+            self.hum_temp = hum_temp
+        else:
+            self.hum_temp = BME280()
+
+        if co2 is not None:
+            self.co2 = co2
+        else:
+            self.co2 = MHZ19()
+
         self.data = env_data
 
     @classmethod
     def start_capture(cls, rows=20, increment='5s'):
-        co_read = MHZ19.get_sample()
-        hum_temp_read = BME280.get_sample()
+        hum_temp_sens = BME280()
+        co_sens = MHZ19()
+        co_read = co_sens.get_sample()
+        hum_temp_read = hum_temp_sens.get_sample()
         # co_read = {"co2": 1648}
         # hum_temp_read ={
         #     "time": datetime.now(),
@@ -34,11 +46,11 @@ class Environment:
 
         df = pd.DataFrame(data=data, index=index, columns=cols)
 
-        return cls(df)
+        return cls(df, hum_temp=hum_temp_sens, co2=co_sens)
 
     def get_sample(self, max_rows=200):
-        co_read = MHZ19.get_sample()
-        hum_temp_read = BME280.get_sample()
+        co_read = self.co2.get_sample()
+        hum_temp_read = self.hum_temp.get_sample()
         # co_read = {"co2": 1600}
         # hum_temp_read ={
         #     "time": datetime.now(),
