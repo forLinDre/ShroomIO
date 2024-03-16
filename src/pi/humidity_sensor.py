@@ -14,7 +14,11 @@ class BME280:
         else:
             self.calibration_params = calibration_params
 
-    def take_sample(self):
+    def get_sample(self):
         sample = bme280.sample(bus=self.bus, address=self.address, compensation_params=self.calibration_params)
 
-        return sample
+        return {
+            "time": sample.timestamp,
+            "temp": sample.temperature,
+            "humidity": sample.humidity
+                }

@@ -2,6 +2,7 @@
 import streamlit as st
 import time
 from default_params import *
+from environment import Environment
 
 # import raspberry pi objects
 from pi_objects import *
@@ -172,6 +173,9 @@ circ_fan = air_expander.slider(
     disabled=False if st.session_state.air_circ else True
 )
 
+env = Environment.start_capture()
+st.dataframe(env.data)
+
 # tent control
 while True:
     time_now = dt.datetime.now()
@@ -195,7 +199,7 @@ while True:
     # humidity control
     # if hum_control:
     #     current_hum =
-    st.write(co2.get_sample())
+    env.get_sample()
 
     time.sleep(5)
 
