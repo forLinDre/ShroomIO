@@ -176,7 +176,7 @@ circ_fan = air_expander.slider(
 if 'env' not in st.session_state:
     env = Environment.start_capture()
     st.session_state['env'] = env
-    my_df = st.data_editor(st.session_state['my_data'].data, key='my_df')
+    my_df = st.data_editor(st.session_state['env'].data, key='my_df')
 else:
     env = st.session_state['env']
 
