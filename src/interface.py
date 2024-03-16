@@ -203,7 +203,7 @@ while True:
                 sun.off()
 
     env.get_sample()
-    my_chart_ph.linechart(env.data)
+    my_chart_ph.line_chart(env.data)
     my_chart_ph.empty()
     # my_chart.add_rows(new_data)
 
