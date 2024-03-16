@@ -204,8 +204,8 @@ while True:
 
     env.get_sample()
     my_chart_ph.line_chart(env.data)
-    my_chart_ph.empty()
     # my_chart.add_rows(new_data)
 
     time.sleep(5)
+    my_chart_ph.empty()
 
