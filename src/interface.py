@@ -176,7 +176,7 @@ circ_fan = air_expander.slider(
 if 'env' not in st.session_state:
     env = Environment.start_capture()
     st.session_state['env'] = env
-    st.dataframe(st.session_state['env'].data)
+    my_chart = st.line_chart(st.session_state['env'].data)
 else:
     env = st.session_state['env']
 
@@ -201,10 +201,8 @@ while True:
             if sun.value:
                 sun.off()
 
-    # humidity control
-    # if hum_control:
-    #     current_hum =
-    env.get_sample()
+    new_data = env.get_sample()
+    my_chart.add_rows(new_data)
 
     time.sleep(5)
 

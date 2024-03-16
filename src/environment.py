@@ -64,5 +64,7 @@ class Environment:
         cols = ["temp", "humidity", "co2"]
         df = pd.DataFrame(data=data, index=index, columns=cols)
 
-        self.data = pd.concat([self.data, df])
+        # self.data = pd.concat([self.data, df])
+
+        return df
 
