@@ -203,7 +203,7 @@ while True:
     # humidity control
     # if hum_control:
     #     current_hum =
-    st.session_state['env'].get_sample()
+    st.session_state['env'] = st.session_state['env'].get_sample()
     my_df.update(st.session_state['env'].data)
 
 
