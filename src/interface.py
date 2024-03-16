@@ -173,8 +173,12 @@ circ_fan = air_expander.slider(
     disabled=False if st.session_state.air_circ else True
 )
 
-env = Environment.start_capture()
-st.dataframe(env.data)
+if 'my_data' not in st.session_state:
+    env = Environment.start_capture()
+    st.session_state['my_data'] = env
+    # my_data = st.dataframe(env.data)
+else:
+    env = st.session_state['my_data']
 
 # tent control
 while True:
@@ -199,7 +203,9 @@ while True:
     # humidity control
     # if hum_control:
     #     current_hum =
-    env.get_sample()
+    st.session_state['my_data'] = st.session_state['my_data'].get_sample()
+    st.dataframe(st.session_state['my_data'].data)
+
 
     time.sleep(5)
 
