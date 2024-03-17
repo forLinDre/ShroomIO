@@ -7,7 +7,11 @@ from pi.humidity_sensor import BME280
 
 
 class Environment:
-    def __init__(self, env_data, hum_temp=None, co2=None):
+    def __init__(self, env_data, max_rows=86400, init_rows=80000, hum_temp=None, co2=None):
+
+        self.max_rows = max_rows
+        self.init_rows = init_rows
+
         if hum_temp is not None:
             self.hum_temp = hum_temp
         else:
@@ -21,7 +25,7 @@ class Environment:
         self.data = env_data
 
     @classmethod
-    def start_capture(cls, rows=20, increment='5s'):
+    def start_capture(cls, max_rows=86400, init_rows=86395, freq='5s'):
         hum_temp_sens = BME280()
         co_sens = MHZ19()
         co_read = co_sens.get_sample()
@@ -34,21 +38,21 @@ class Environment:
         #         }
 
         data = np.array([hum_temp_read.get("temp"), hum_temp_read.get("humidity"), co_read.get("co2")])
-        data = np.tile(data, (rows, 1))
+        data = np.tile(data, (init_rows, 1))
 
         index = pd.date_range(
-            start=datetime.now() - (pd.Timedelta(increment) * (rows - 1)),
+            start=datetime.now() - (pd.Timedelta(freq) * (init_rows - 1)),
             end=datetime.now(),
-            freq=increment
+            freq=freq
         )
 
         cols = ["temp", "humidity", "co2"]
 
         df = pd.DataFrame(data=data, index=index, columns=cols)
 
-        return cls(df, hum_temp=hum_temp_sens, co2=co_sens)
+        return cls(df, max_rows, init_rows, hum_temp=hum_temp_sens, co2=co_sens)
 
-    def get_sample(self, max_rows=200):
+    def get_sample(self):
         co_read = self.co2.get_sample()
         hum_temp_read = self.hum_temp.get_sample()
         # co_read = {"co2": 1600}
@@ -64,7 +68,15 @@ class Environment:
         cols = ["temp", "humidity", "co2"]
         df = pd.DataFrame(data=data, index=index, columns=cols)
 
-        self.data = pd.concat([self.data, df])
+        new_df = pd.concat([self.data, df])
 
-        # return df
+        num_rows = new_df.shape[0]
+
+        if num_rows == self.max_rows:
+            new_df = new_df[-self.init_rows:]
+        elif num_rows > self.max_rows:
+            raise Exception('the number of rows should never get above the max allowable')
+
+        self.data = new_df
+
 

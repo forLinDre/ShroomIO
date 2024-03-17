@@ -1,6 +1,9 @@
 # imports
 import datetime as dt
 
+# functional parameters
+run_freq = '5s'
+
 # light parameters
 # sunrise time
 def_light_on_time = dt.time(hour=7, minute=0, second=0)

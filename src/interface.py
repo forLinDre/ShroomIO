@@ -1,4 +1,5 @@
 # imports
+import pandas as pd
 import streamlit as st
 import time
 from default_params import *
@@ -176,11 +177,16 @@ circ_fan = air_expander.slider(
 if 'env' not in st.session_state:
     env = Environment.start_capture()
     st.session_state['env'] = env
-    # my_chart = st.line_chart(st.session_state['env'].data)
+    chart_pl = st.empty()
+    my_chart = chart_pl.line_chart(env.data)
+    # st.session_state['my_chart'] = my_chart
 else:
     env = st.session_state['env']
+    chart_pl = st.empty()
+    my_chart = chart_pl.line_chart(env.data)
+    # my_chart = st.session_state['my_chart']
+    # chart_pl.write(my_chart)
 
-my_chart_ph = st.empty()
 
 # tent control
 while True:
@@ -202,10 +208,17 @@ while True:
             if sun.value:
                 sun.off()
 
-    env.get_sample()
-    my_chart_ph.line_chart(env.data)
-    # my_chart.add_rows(new_data)
+    num_rows = env.data.shape[0]
+    if num_rows == env.init_rows:
+        chart_pl.empty()
+        env.get_sample()
+        chart_pl.line_chart(env.data)
+    else:
+        env.get_sample()
+        my_chart.add_rows(env.data.iloc[-1])
 
-    time.sleep(5)
-    my_chart_ph.empty()
+    st.session_state['env'] = env
+    # st.session_state['my_chart'] = my_chart
+
+    time.sleep(pd.Timedelta(run_freq).total_seconds())
 
