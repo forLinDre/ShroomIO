@@ -177,13 +177,17 @@ circ_fan = air_expander.slider(
 if 'env' not in st.session_state:
     env = Environment.start_capture()
     st.session_state['env'] = env
-    chart_pl = st.empty()
-    my_chart = chart_pl.line_chart(env.data)
+    temp_hum_chart_pl = st.empty()
+    co2_chart_pl = st.empty()
+    temp_hum_chart = temp_hum_chart_pl.line_chart(env.data['temp', 'humidity'])
+    co2_chart = co2_chart_pl.line_chart(env.data['co2'])
     # st.session_state['my_chart'] = my_chart
 else:
     env = st.session_state['env']
-    chart_pl = st.empty()
-    my_chart = chart_pl.line_chart(env.data)
+    temp_hum_chart_pl = st.empty()
+    co2_chart_pl = st.empty()
+    temp_hum_chart = temp_hum_chart_pl.line_chart(env.data['temp', 'humidity'])
+    co2_chart = co2_chart_pl.line_chart(env.data['co2'])
     # my_chart = st.session_state['my_chart']
     # chart_pl.write(my_chart)
 
@@ -217,12 +221,15 @@ while True:
 
     num_rows = env.data.shape[0]
     if num_rows == env.init_rows:
-        chart_pl.empty()
+        temp_hum_chart_pl.empty()
+        co2_chart_pl.empty()
         trash = env.get_sample()
-        chart_pl.line_chart(env.data)
+        temp_hum_chart = temp_hum_chart_pl.line_chart(env.data['temp', 'humidity'])
+        co2_chart = co2_chart_pl.line_chart(env.data['co2'])
     else:
         new_row = env.get_sample()
-        my_chart.add_rows(new_row)
+        temp_hum_chart.add_rows(new_row['temp', 'humidity'])
+        co2_chart.add_rows(new_row['co2'])
 
     st.session_state['env'] = env
 
