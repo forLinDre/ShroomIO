@@ -187,11 +187,14 @@ else:
     # my_chart = st.session_state['my_chart']
     # chart_pl.write(my_chart)
 
-for i, col in enumerate(st.columns(3)):
-    tile = col.container(height=20)
-    label = env.data.iloc[-1].index[i]
-    tile.title(label)
-    tile.write(env.data.iloc[-1][label])
+temp_col, hum_col, co2_col = st.columns([1, 1, 1])
+temp_col.title = 'Temperature (deg. F)'
+hum_col.title = 'Relative Humidity'
+co2_col.title = 'CO2 PPM'
+
+temp_col.write(env.data.iloc[-1][0])
+hum_col.write(env.data.iloc[-1][1])
+co2_col.write(env.data.iloc[-1][2])
 
 # tent control
 while True:
