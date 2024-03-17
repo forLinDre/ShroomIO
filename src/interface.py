@@ -215,6 +215,7 @@ while True:
         chart_pl.line_chart(env.data)
     else:
         env.get_sample()
+        print(env.data.iloc[-1])
         my_chart.add_rows(env.data.iloc[-1])
 
     st.session_state['env'] = env
