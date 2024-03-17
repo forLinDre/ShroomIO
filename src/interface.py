@@ -211,12 +211,11 @@ while True:
     num_rows = env.data.shape[0]
     if num_rows == env.init_rows:
         chart_pl.empty()
-        env.get_sample()
+        trash = env.get_sample()
         chart_pl.line_chart(env.data)
     else:
-        env.get_sample()
-        print(env.data.iloc[-1])
-        my_chart.add_rows(env.data.iloc[-1])
+        new_row = env.get_sample()
+        my_chart.add_rows(new_row)
 
     st.session_state['env'] = env
     # st.session_state['my_chart'] = my_chart

@@ -79,4 +79,6 @@ class Environment:
 
         self.data = new_df
 
+        return df
+
 
