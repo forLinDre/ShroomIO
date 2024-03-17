@@ -7,7 +7,7 @@ from pi.humidity_sensor import BME280
 
 
 class Environment:
-    def __init__(self, env_data, max_rows=86400, init_rows=80000, hum_temp=None, co2=None):
+    def __init__(self, env_data, max_rows, init_rows, hum_temp=None, co2=None):
 
         self.max_rows = max_rows
         self.init_rows = init_rows

@@ -187,6 +187,11 @@ else:
     # my_chart = st.session_state['my_chart']
     # chart_pl.write(my_chart)
 
+for i, col in enumerate(st.columns(3)):
+    tile = col.container(height=20)
+    label = env.data.iloc[-1].index[i]
+    tile.title(label)
+    tile.write(env.data.iloc[-1][label])
 
 # tent control
 while True:
