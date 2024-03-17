@@ -188,13 +188,9 @@ else:
     # chart_pl.write(my_chart)
 
 temp_col, hum_col, co2_col = st.columns([1, 1, 1])
-temp_col.title = 'Temperature (deg. F)'
-hum_col.title = 'Relative Humidity'
-co2_col.title = 'CO2 PPM'
-
-temp_col.write(env.data.iloc[-1][0])
-hum_col.write(env.data.iloc[-1][1])
-co2_col.write(env.data.iloc[-1][2])
+temp_col.write(f'Temperature (deg. F): {round(env.data.iloc[-1].iloc[0], 2)}')
+hum_col.write(f'Relative Humidity: {round(env.data.iloc[-1].iloc[0], 2)}')
+co2_col.write(f'CO2 PPM: {round(env.data.iloc[-1].iloc[0], 2)}')
 
 # tent control
 while True:
@@ -226,7 +222,14 @@ while True:
         my_chart.add_rows(new_row)
 
     st.session_state['env'] = env
-    # st.session_state['my_chart'] = my_chart
+
+    temp_col.empty()
+    temp_col.empty()
+    hum_col.empty()
+
+    temp_col.write(f'Temperature (deg. F): {round(env.data.iloc[-1].iloc[0], 2)}')
+    hum_col.write(f'Relative Humidity: {round(env.data.iloc[-1].iloc[0], 2)}')
+    co2_col.write(f'CO2 PPM: {round(env.data.iloc[-1].iloc[0], 2)}')
 
     time.sleep(pd.Timedelta(run_freq).total_seconds())
 
