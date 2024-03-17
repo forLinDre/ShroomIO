@@ -19,6 +19,6 @@ class BME280:
 
         return {
             "time": sample.timestamp,
-            "temp": sample.temperature,
+            "temp": (sample.temperature * (9/5)) + 32,
             "humidity": sample.humidity
                 }
