@@ -187,10 +187,13 @@ else:
     # my_chart = st.session_state['my_chart']
     # chart_pl.write(my_chart)
 
-temp_col, hum_col, co2_col = st.columns([1, 1, 1])
-temp_col.write(f'Temperature (deg. F): {round(env.data.iloc[-1].iloc[0], 2)}')
-hum_col.write(f'Relative Humidity: {round(env.data.iloc[-1].iloc[0], 2)}')
-co2_col.write(f'CO2 PPM: {round(env.data.iloc[-1].iloc[0], 2)}')
+# temp_col, hum_col, co2_col = st.columns([1, 1, 1])
+# temp_col.write(f'Temperature (deg. F): {round(env.data.iloc[-1].iloc[0], 2)}')
+# hum_col.write(f'Relative Humidity: {round(env.data.iloc[-1].iloc[1], 2)}')
+# co2_col.write(f'CO2 PPM: {round(env.data.iloc[-1].iloc[2], 2)}')
+temp_col = st.empty()
+hum_col = st.empty()
+co2_col = st.empty()
 
 # tent control
 while True:
@@ -228,8 +231,8 @@ while True:
     hum_col.empty()
 
     temp_col.write(f'Temperature (deg. F): {round(env.data.iloc[-1].iloc[0], 2)}')
-    hum_col.write(f'Relative Humidity: {round(env.data.iloc[-1].iloc[0], 2)}')
-    co2_col.write(f'CO2 PPM: {round(env.data.iloc[-1].iloc[0], 2)}')
+    hum_col.write(f'Relative Humidity: {round(env.data.iloc[-1].iloc[1], 2)}')
+    co2_col.write(f'CO2 PPM: {round(env.data.iloc[-1].iloc[2], 2)}')
 
     time.sleep(pd.Timedelta(run_freq).total_seconds())
 
