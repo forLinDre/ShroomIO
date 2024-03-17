@@ -179,22 +179,15 @@ if 'env' not in st.session_state:
     st.session_state['env'] = env
     temp_hum_chart_pl = st.empty()
     co2_chart_pl = st.empty()
-    temp_hum_chart = temp_hum_chart_pl.line_chart(env.data[['temp', 'humidity']])
-    co2_chart = co2_chart_pl.line_chart(env.data['co2'])
-    # st.session_state['my_chart'] = my_chart
+    temp_hum_chart = temp_hum_chart_pl.line_chart(env.data[['temp', 'humidity']], height=100)
+    co2_chart = co2_chart_pl.line_chart(env.data['co2'], height=100)
 else:
     env = st.session_state['env']
     temp_hum_chart_pl = st.empty()
     co2_chart_pl = st.empty()
-    temp_hum_chart = temp_hum_chart_pl.line_chart(env.data[['temp', 'humidity']])
-    co2_chart = co2_chart_pl.line_chart(env.data['co2'])
-    # my_chart = st.session_state['my_chart']
-    # chart_pl.write(my_chart)
+    temp_hum_chart = temp_hum_chart_pl.line_chart(env.data[['temp', 'humidity']], height=100)
+    co2_chart = co2_chart_pl.line_chart(env.data['co2'], height=100)
 
-# temp_col, hum_col, co2_col = st.columns([1, 1, 1])
-# temp_col.write(f'Temperature (deg. F): {round(env.data.iloc[-1].iloc[0], 2)}')
-# hum_col.write(f'Relative Humidity: {round(env.data.iloc[-1].iloc[1], 2)}')
-# co2_col.write(f'CO2 PPM: {round(env.data.iloc[-1].iloc[2], 2)}')
 temp_col = st.empty()
 hum_col = st.empty()
 co2_col = st.empty()
@@ -224,12 +217,12 @@ while True:
         temp_hum_chart_pl.empty()
         co2_chart_pl.empty()
         trash = env.get_sample()
-        temp_hum_chart = temp_hum_chart_pl.line_chart(env.data[['temp', 'humidity']])
-        co2_chart = co2_chart_pl.line_chart(env.data['co2'])
+        temp_hum_chart = temp_hum_chart_pl.line_chart(env.data[['temp', 'humidity']], height=100)
+        co2_chart = co2_chart_pl.line_chart(env.data['co2'], height=100)
     else:
         new_row = env.get_sample()
-        temp_hum_chart.add_rows(new_row[['temp', 'humidity']])
-        co2_chart.add_rows(new_row['co2'])
+        temp_hum_chart.add_rows(new_row[['temp', 'humidity']], height=100)
+        co2_chart.add_rows(new_row['co2'], height=100)
 
     st.session_state['env'] = env
 

@@ -25,7 +25,7 @@ class Environment:
         self.data = env_data
 
     @classmethod
-    def start_capture(cls, max_rows=5000, init_rows=4995, freq='5s'):
+    def start_capture(cls, max_rows=5000, init_rows=5, freq='5s'):
         hum_temp_sens = BME280()
         co_sens = MHZ19()
         co_read = co_sens.get_sample()

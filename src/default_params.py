@@ -2,7 +2,7 @@
 import datetime as dt
 
 # functional parameters
-run_freq = '5s'
+run_freq = '0.1s'
 
 # light parameters
 # sunrise time
