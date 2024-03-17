@@ -179,13 +179,13 @@ if 'env' not in st.session_state:
     st.session_state['env'] = env
     temp_hum_chart_pl = st.empty()
     co2_chart_pl = st.empty()
-    temp_hum_chart = temp_hum_chart_pl.line_chart(env.data[['temp', 'humidity']], height=100)
+    temp_hum_chart = temp_hum_chart_pl.line_chart(env.data[['temp', 'humidity']], height=300)
     co2_chart = co2_chart_pl.line_chart(env.data['co2'], height=100)
 else:
     env = st.session_state['env']
     temp_hum_chart_pl = st.empty()
     co2_chart_pl = st.empty()
-    temp_hum_chart = temp_hum_chart_pl.line_chart(env.data[['temp', 'humidity']], height=100)
+    temp_hum_chart = temp_hum_chart_pl.line_chart(env.data[['temp', 'humidity']], height=300)
     co2_chart = co2_chart_pl.line_chart(env.data['co2'], height=100)
 
 temp_col = st.empty()
@@ -217,8 +217,8 @@ while True:
         temp_hum_chart_pl.empty()
         co2_chart_pl.empty()
         trash = env.get_sample()
-        temp_hum_chart = temp_hum_chart_pl.line_chart(env.data[['temp', 'humidity']], height=100)
-        co2_chart = co2_chart_pl.line_chart(env.data['co2'], height=100)
+        temp_hum_chart = temp_hum_chart_pl.line_chart(env.data[['temp', 'humidity']], height=300)
+        co2_chart = co2_chart_pl.line_chart(env.data['co2'], height=300)
     else:
         new_row = env.get_sample()
         temp_hum_chart.add_rows(new_row[['temp', 'humidity']])
