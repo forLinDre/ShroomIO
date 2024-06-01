@@ -255,7 +255,7 @@ while True:
 
                 if not hum.fogger.value:
                     hum.fogger.on()
-                if hum.hum_fan.value < hum_dc:
+                if hum.hum_fan.value != hum_dc:
                     hum.hum_fan.frequency = hum_dc/100
                     hum.hum_fan.on()
 
@@ -266,8 +266,17 @@ while True:
                 if hum.fogger.value:
                     hum.fogger.off()
                 if hum.hum_fan.value > 0:
-                    hum.hum_fan.frequency = 0
+                    # hum.hum_fan.frequency = 0
                     hum.hum_fan.off()
+                st.session_state.hum_on = False
+    else:
+        if st.session_state.hum_on:
+            if hum.fogger.value:
+                hum.fogger.off()
+            if hum.hum_fan.value > 0:
+                # hum.hum_fan.frequency = 0
+                hum.hum_fan.off()
+            st.session_state.hum_on = False
 
     time.sleep(pd.Timedelta(run_freq).total_seconds())
 
