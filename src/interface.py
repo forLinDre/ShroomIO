@@ -156,6 +156,16 @@ circ_fan = air_expander.slider(
     disabled=False if st.session_state.air_circ else True
 )
 
+circ_freq = air_expander.slider(
+    label='Air Circulation Fan Frequency',
+    key='circ_freq',
+    min_value=25,
+    max_value=25000,
+    value=10000,
+    step=25,
+    disabled=False if st.session_state.air_circ else True
+)
+
 # add environmental instance to session state
 if 'env' not in st.session_state:
     env = Environment.start_capture()
@@ -186,6 +196,10 @@ if 'heat_on' not in st.session_state:
 # add FAE monitoring switch to session state
 if 'fae_on' not in st.session_state:
     st.session_state['fae_on'] = False
+
+# add circ monitoring switch to session state
+if 'circ_on' not in st.session_state:
+    st.session_state['circ_on'] = False
 
 # tent control
 while True:
@@ -317,6 +331,29 @@ while True:
                 fae.off()
 
             st.session_state.fae_on = False
+
+    # circulation control
+    if st.session_state.air_circ:
+        circ_dc = st.session_state.circ_fan
+
+        if circ.value != circ_dc and st.session_state.circ_on:
+            circ.value = circ_dc / 100
+
+        if circ.frequency != st.session_state.circ_freq and st.session_state.circ_on:
+            circ.frequency = st.session_state.circ_freq
+
+        if not st.session_state.circ_on:
+
+            if not circ.value:
+                circ.on()
+
+            st.session_state.hum_on = True
+
+    else:
+        if st.session_state.circ_on:
+            if circ.value:
+                circ.off()
+            st.session_state.circ_on = False
 
     time.sleep(pd.Timedelta(run_freq).total_seconds())
 

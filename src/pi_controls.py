@@ -2,6 +2,7 @@ from light import Light
 from heater import Heater
 from humidifier import Humidifier
 from FAE_fan import FAE
+from circulation import PWM
 
 # define light control object
 sun = Light(17)
@@ -18,3 +19,9 @@ heat = Heater(22)
 
 # define FAE fan
 fae = FAE(5)
+
+# define circulation fan
+circ = PWM(
+    pin=12,
+    frequency=25000
+)
