@@ -7,24 +7,6 @@ from environment import Environment
 
 # import raspberry pi objects
 from pi_controls import *
-# import random
-# 
-# class TempLight:
-#     def __init__(self):
-#         pass
-# 
-#     def on(self):
-#         pass
-# 
-#     def off(self):
-#         pass
-# 
-#     @property
-#     def value(self):
-#         return random.choice([0, 1])
-# 
-# 
-# sun = TempLight()
 
 # light interface
 light_expander = st.sidebar.expander('Light Control :sun_with_face:')
@@ -197,6 +179,10 @@ co2_col = st.empty()
 if 'hum_on' not in st.session_state:
     st.session_state['hum_on'] = False
 
+# add heater monitoring switch to session state
+if 'heat_on' not in st.session_state:
+    st.session_state['heat_on'] = False
+
 # tent control
 while True:
     time_now = dt.datetime.now()
@@ -246,7 +232,6 @@ while True:
                 sun.off()
 
     # humidity control
-    #
     if st.session_state.hum_control:
         hum_dc = st.session_state.hum_fan
 
@@ -278,6 +263,31 @@ while True:
             if hum.hum_fan.value > 0:
                 hum.hum_fan.off()
             st.session_state.hum_on = False
+
+    # temp control
+    if st.session_state.temp_control:
+
+        if recent_temp < st.session_state.temp_set - st.session_state.temp_tol:
+            # if heater wasn't triggered already, turn it on
+            if not st.session_state.heat_on:
+                if not heat.value:
+                    heat.on()
+
+                st.session_state.heat_on = True
+
+        elif recent_temp > st.session_state.temp_set:
+            # if heater was previously on, turn it off
+            if st.session_state.temp_on:
+                if heat.value:
+                    heat.off()
+
+                st.session_state.heat_on = False
+    else:
+        if st.session_state.heat_on:
+            if heat.value:
+                heat.off()
+
+            st.session_state.heat_on = False
 
     time.sleep(pd.Timedelta(run_freq).total_seconds())
 

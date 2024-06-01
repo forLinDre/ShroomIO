@@ -1,4 +1,5 @@
 from light import Light
+from heater import Heater
 from humidifier import Humidifier
 
 # define light control object
@@ -10,3 +11,6 @@ hum = Humidifier(
     fan_pin=13,
     fan_pwm_freq=25000
 )
+
+# define heater
+heat = Heater(22)
