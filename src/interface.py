@@ -156,15 +156,15 @@ circ_fan = air_expander.slider(
     disabled=False if st.session_state.air_circ else True
 )
 
-circ_freq = air_expander.slider(
-    label='Air Circulation Fan Frequency',
-    key='circ_freq',
-    min_value=1,
-    max_value=300,
-    value=20,
-    step=1,
-    disabled=False if st.session_state.air_circ else True
-)
+# circ_freq = air_expander.slider(
+#     label='Air Circulation Fan Frequency',
+#     key='circ_freq',
+#     min_value=1,
+#     max_value=300,
+#     value=20,
+#     step=1,
+#     disabled=False if st.session_state.air_circ else True
+# )
 
 # add environmental instance to session state
 if 'env' not in st.session_state:
@@ -181,10 +181,6 @@ else:
     temp_hum_chart = temp_hum_chart_pl.line_chart(env.data[['temp', 'humidity']], height=300)
     co2_chart = co2_chart_pl.line_chart(env.data['co2'], height=100)
 
-temp_col = st.empty()
-hum_col = st.empty()
-co2_col = st.empty()
-
 # add humidity monitoring switch to session state
 if 'hum_on' not in st.session_state:
     st.session_state['hum_on'] = False
@@ -200,6 +196,18 @@ if 'fae_on' not in st.session_state:
 # add circ monitoring switch to session state
 if 'circ_on' not in st.session_state:
     st.session_state['circ_on'] = False
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    temp_col = st.empty()
+    hum_col = st.empty()
+    co2_col = st.empty()
+
+with col2:
+   temp_status_col = st.empty()
+   hum_status_col = st.empty()
+   co2_status_col = st.empty()
 
 # tent control
 while True:
@@ -220,9 +228,18 @@ while True:
 
     st.session_state['env'] = env
 
-    temp_col.empty()
-    temp_col.empty()
-    hum_col.empty()
+    # temp_col.empty()
+    # temp_col.empty()
+    # hum_col.empty()
+    with col1:
+        temp_col = st.empty()
+        hum_col = st.empty()
+        co2_col = st.empty()
+
+    with col2:
+        temp_status_col = st.empty()
+        hum_status_col = st.empty()
+        co2_status_col = st.empty()
 
     # most recent humidity data
     recent_temp = round(env.data.iloc[-1].iloc[0], 2)
@@ -232,6 +249,10 @@ while True:
     temp_col.write(f'Temperature (deg. F): {recent_temp}')
     hum_col.write(f'Relative Humidity: {recent_hum}')
     co2_col.write(f'CO2 PPM: {recent_co2}')
+
+    temp_status_col.write(f'Heater is on: {st.session_state.heat_on}')
+    hum_status_col.write(f'Humidifier is on: {st.session_state.hum_on}')
+    co2_status_col.write(f'FAE is on: {st.session_state.fae_on}')
 
     # light control
     if not st.session_state.manual_lc:
@@ -339,8 +360,8 @@ while True:
         if circ.value != circ_dc and st.session_state.circ_on:
             circ.value = circ_dc / 100
 
-        if circ.frequency != st.session_state.circ_freq and st.session_state.circ_on:
-            circ.frequency = st.session_state.circ_freq
+        # if circ.frequency != st.session_state.circ_freq and st.session_state.circ_on:
+        #     circ.frequency = st.session_state.circ_freq
 
         if not st.session_state.circ_on:
 

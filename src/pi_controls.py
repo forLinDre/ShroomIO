@@ -11,7 +11,7 @@ sun = Light(17)
 hum = Humidifier(
     fog_pin=27,
     fan_pin=13,
-    fan_pwm_freq=25000
+    fan_pwm_freq=40
 )
 
 # define heater
@@ -23,7 +23,7 @@ fae = FAE(5)
 # define circulation fan
 circ = PWM(
     pin=12,
-    frequency=25000,
+    frequency=40,
     active_high=True,
     initial_dc_value=0,
 )
