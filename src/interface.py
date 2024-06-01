@@ -181,6 +181,13 @@ else:
     temp_hum_chart = temp_hum_chart_pl.line_chart(env.data[['temp', 'humidity']], height=300)
     co2_chart = co2_chart_pl.line_chart(env.data['co2'], height=100)
 
+temp_col = st.empty()
+hum_col = st.empty()
+co2_col = st.empty()
+temp_status_col = st.empty()
+hum_status_col = st.empty()
+co2_status_col = st.empty()
+
 # add humidity monitoring switch to session state
 if 'hum_on' not in st.session_state:
     st.session_state['hum_on'] = False
@@ -196,18 +203,6 @@ if 'fae_on' not in st.session_state:
 # add circ monitoring switch to session state
 if 'circ_on' not in st.session_state:
     st.session_state['circ_on'] = False
-
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    temp_col = st.empty()
-    hum_col = st.empty()
-    co2_col = st.empty()
-
-with col2:
-   temp_status_col = st.empty()
-   hum_status_col = st.empty()
-   co2_status_col = st.empty()
 
 # tent control
 while True:
@@ -228,33 +223,21 @@ while True:
 
     st.session_state['env'] = env
 
-    # temp_col.empty()
-    # temp_col.empty()
-    # hum_col.empty()
-    with col1:
-        temp_col = st.empty()
-        hum_col = st.empty()
-        co2_col = st.empty()
-
-    with col2:
-        temp_status_col = st.empty()
-        hum_status_col = st.empty()
-        co2_status_col = st.empty()
+    temp_col.empty()
+    temp_col.empty()
+    hum_col.empty()
+    temp_status_col.empty()
+    hum_status_col.empty()
+    co2_status_col.empty()
 
     # most recent humidity data
     recent_temp = round(env.data.iloc[-1].iloc[0], 2)
     recent_hum = round(env.data.iloc[-1].iloc[1], 2)
     recent_co2 = round(env.data.iloc[-1].iloc[2], 2)
 
-    with col1:
-        temp_col.write(f'Temperature (deg. F): {recent_temp}')
-        hum_col.write(f'Relative Humidity: {recent_hum}')
-        co2_col.write(f'CO2 PPM: {recent_co2}')
-
-    with col2:
-        temp_status_col.write(f'Heater is on: {st.session_state.heat_on}')
-        hum_status_col.write(f'Humidifier is on: {st.session_state.hum_on}')
-        co2_status_col.write(f'FAE is on: {st.session_state.fae_on}')
+    temp_col.write(f'Temperature (deg. F): {recent_temp}')
+    hum_col.write(f'Relative Humidity: {recent_hum}')
+    co2_col.write(f'CO2 PPM: {recent_co2}')
 
     # light control
     if not st.session_state.manual_lc:
@@ -305,6 +288,8 @@ while True:
                 hum.hum_fan.off()
             st.session_state.hum_on = False
 
+    hum_status_col.write(f'Humidifier is on: {st.session_state.hum_on}')
+
     # temp control
     if st.session_state.temp_control:
 
@@ -330,6 +315,8 @@ while True:
 
             st.session_state.heat_on = False
 
+    temp_status_col.write(f'Heater is on: {st.session_state.heat_on}')
+
     # FAE control
     if st.session_state.fae_control:
 
@@ -354,6 +341,8 @@ while True:
                 fae.off()
 
             st.session_state.fae_on = False
+
+    co2_status_col.write(f'FAE is on: {st.session_state.fae_on}')
 
     # circulation control
     if st.session_state.air_circ:
