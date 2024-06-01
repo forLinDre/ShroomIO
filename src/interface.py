@@ -183,6 +183,10 @@ if 'hum_on' not in st.session_state:
 if 'heat_on' not in st.session_state:
     st.session_state['heat_on'] = False
 
+# add FAE monitoring switch to session state
+if 'fae_on' not in st.session_state:
+    st.session_state['fae_on'] = False
+
 # tent control
 while True:
     time_now = dt.datetime.now()
@@ -288,6 +292,31 @@ while True:
                 heat.off()
 
             st.session_state.heat_on = False
+
+    # FAE control
+    if st.session_state.fae_control:
+
+        if recent_co2 > st.session_state.co2_set + st.session_state.co2_tol:
+            # if fae wasn't triggered already, turn it on
+            if not st.session_state.fae_on:
+                if not fae.value:
+                    fae.on()
+
+                st.session_state.fae_on = True
+
+        elif recent_co2 < st.session_state.co2_set:
+            # if fae was previously on, turn it off
+            if st.session_state.fae_on:
+                if fae.value:
+                    fae.off()
+
+                st.session_state.fae_on = False
+    else:
+        if st.session_state.fae_on:
+            if fae.value:
+                fae.off()
+
+            st.session_state.fae_on = False
 
     time.sleep(pd.Timedelta(run_freq).total_seconds())
 

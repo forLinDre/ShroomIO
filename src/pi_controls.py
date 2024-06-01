@@ -1,6 +1,7 @@
 from light import Light
 from heater import Heater
 from humidifier import Humidifier
+from FAE_fan import FAE
 
 # define light control object
 sun = Light(17)
@@ -14,3 +15,6 @@ hum = Humidifier(
 
 # define heater
 heat = Heater(22)
+
+# define FAE fan
+fae = FAE(5)
