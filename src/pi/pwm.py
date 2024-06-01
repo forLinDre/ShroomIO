@@ -3,7 +3,7 @@ from gpiozero import PWMOutputDevice
 
 
 class PWM(PWMOutputDevice):
-    def __init__(self, pin, active_high=True, initial_dc_value=0, frequency=100000):
+    def __init__(self, pin, active_high=True, initial_dc_value=0, frequency=25000):
         PWMOutputDevice.__init__(
             self,
             pin=pin,

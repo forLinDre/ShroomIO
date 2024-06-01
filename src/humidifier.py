@@ -12,7 +12,7 @@ class Humidifier:
             fan_active_high=True,
             fog_initial_value=False,
             fan_initial_dc_value=0,
-            fan_pwm_freq=100000
+            fan_pwm_freq=25000
     ):
 
         self.fogger = OFRelay(

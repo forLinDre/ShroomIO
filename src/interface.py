@@ -6,7 +6,7 @@ from default_params import *
 from environment import Environment
 
 # import raspberry pi objects
-from pi_objects import *
+from pi_controls import *
 # import random
 # 
 # class TempLight:
@@ -174,6 +174,7 @@ circ_fan = air_expander.slider(
     disabled=False if st.session_state.air_circ else True
 )
 
+# add environmental instance to session state
 if 'env' not in st.session_state:
     env = Environment.start_capture()
     st.session_state['env'] = env
@@ -192,26 +193,15 @@ temp_col = st.empty()
 hum_col = st.empty()
 co2_col = st.empty()
 
+# add humidity monitoring switch to session state
+if 'hum_on' not in st.session_state:
+    st.session_state['hum_on'] = False
+
 # tent control
 while True:
     time_now = dt.datetime.now()
 
-    # light control
-    if not st.session_state.manual_lc:
-        if time_now.time() > st.session_state.sunrise and time_now.time() < st.session_state.sunset:
-            if not sun.value:
-                sun.on()
-        else:
-            if sun.value:
-                sun.off()
-    else:
-        if st.session_state.ml_on:
-            if not sun.value:
-                sun.on()
-        else:
-            if sun.value:
-                sun.off()
-
+    # show updated data
     num_rows = env.data.shape[0]
     if num_rows == env.init_rows:
         temp_hum_chart_pl.empty()
@@ -230,9 +220,54 @@ while True:
     temp_col.empty()
     hum_col.empty()
 
-    temp_col.write(f'Temperature (deg. F): {round(env.data.iloc[-1].iloc[0], 2)}')
-    hum_col.write(f'Relative Humidity: {round(env.data.iloc[-1].iloc[1], 2)}')
-    co2_col.write(f'CO2 PPM: {round(env.data.iloc[-1].iloc[2], 2)}')
+    # most recent humidity data
+    recent_temp = round(env.data.iloc[-1].iloc[0], 2)
+    recent_hum = round(env.data.iloc[-1].iloc[1], 2)
+    recent_co2 = round(env.data.iloc[-1].iloc[2], 2)
+
+    temp_col.write(f'Temperature (deg. F): {recent_temp}')
+    hum_col.write(f'Relative Humidity: {recent_hum}')
+    co2_col.write(f'CO2 PPM: {recent_co2}')
+
+    # light control
+    if not st.session_state.manual_lc:
+        if time_now.time() > st.session_state.sunrise and time_now.time() < st.session_state.sunset:
+            if not sun.value:
+                sun.on()
+        else:
+            if sun.value:
+                sun.off()
+    else:
+        if st.session_state.ml_on:
+            if not sun.value:
+                sun.on()
+        else:
+            if sun.value:
+                sun.off()
+
+    # humidity control
+    #
+    if st.session_state.hum_control:
+        if recent_hum < st.session_state.hum_set - st.session_state.hum_tol:
+            # if humidifier wasn't triggered already, turn it on
+            if not st.session_state.hum_on:
+                hum_dc = st.session_state.hum_fan
+
+                if not hum.fogger.value:
+                    hum.fogger.on()
+                if hum.hum_fan.value < hum_dc:
+                    hum.hum_fan.frequency = hum_dc/100
+                    hum.hum_fan.on()
+
+                st.session_state.hum_on = True
+        elif recent_hum > st.session_state.hum_set:
+            # if humidifier was previously on, turn it off
+            if st.session_state.hum_on:
+                if hum.fogger.value:
+                    hum.fogger.off()
+                if hum.hum_fan.value > 0:
+                    hum.hum_fan.frequency = 0
+                    hum.hum_fan.off()
 
     time.sleep(pd.Timedelta(run_freq).total_seconds())
 
