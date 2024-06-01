@@ -23,5 +23,7 @@ fae = FAE(5)
 # define circulation fan
 circ = PWM(
     pin=12,
-    frequency=25000
+    frequency=25000,
+    active_high=True,
+    initial_dc_value=0,
 )
