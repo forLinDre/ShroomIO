@@ -70,7 +70,7 @@ hum_control = hum_expander.toggle(
 hum_set = hum_expander.slider(
     label='Humidity Setting (R.H.)',
     key='hum_set',
-    min_value=50,
+    min_value=10,
     max_value=100,
     value=def_hum,
     step=1,
@@ -248,6 +248,9 @@ while True:
     # humidity control
     #
     if st.session_state.hum_control:
+        if hum.hum_fan.value != hum_dc:
+            hum.hum_fan.frequency = hum_dc / 100
+
         if recent_hum < st.session_state.hum_set - st.session_state.hum_tol:
             # if humidifier wasn't triggered already, turn it on
             if not st.session_state.hum_on:
@@ -255,8 +258,7 @@ while True:
 
                 if not hum.fogger.value:
                     hum.fogger.on()
-                if hum.hum_fan.value != hum_dc:
-                    hum.hum_fan.frequency = hum_dc/100
+                if hum.hum_fan.value == 0:
                     hum.hum_fan.on()
 
                 st.session_state.hum_on = True
