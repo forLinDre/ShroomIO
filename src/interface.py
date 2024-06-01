@@ -248,13 +248,14 @@ while True:
     # humidity control
     #
     if st.session_state.hum_control:
+        hum_dc = st.session_state.hum_fan
+
         if hum.hum_fan.value != hum_dc:
             hum.hum_fan.frequency = hum_dc / 100
 
         if recent_hum < st.session_state.hum_set - st.session_state.hum_tol:
             # if humidifier wasn't triggered already, turn it on
             if not st.session_state.hum_on:
-                hum_dc = st.session_state.hum_fan
 
                 if not hum.fogger.value:
                     hum.fogger.on()
