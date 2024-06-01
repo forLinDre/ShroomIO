@@ -159,10 +159,10 @@ circ_fan = air_expander.slider(
 circ_freq = air_expander.slider(
     label='Air Circulation Fan Frequency',
     key='circ_freq',
-    min_value=25,
-    max_value=25000,
-    value=10000,
-    step=25,
+    min_value=1,
+    max_value=300,
+    value=20,
+    step=1,
     disabled=False if st.session_state.air_circ else True
 )
 
