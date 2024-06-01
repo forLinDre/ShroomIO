@@ -250,7 +250,7 @@ while True:
     if st.session_state.hum_control:
         hum_dc = st.session_state.hum_fan
 
-        if hum.hum_fan.value != hum_dc:
+        if hum.hum_fan.value != hum_dc and st.session_state.hum_on:
             hum.hum_fan.value = hum_dc / 100
 
         if recent_hum < st.session_state.hum_set - st.session_state.hum_tol:
