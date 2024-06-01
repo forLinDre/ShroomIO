@@ -1,6 +1,6 @@
 # imports
-from src.pi.on_off_relay import OFRelay
-from src.pi.pwm import PWM
+from pi.on_off_relay import OFRelay
+from pi.pwm import PWM
 
 
 class Humidifier:
