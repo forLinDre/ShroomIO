@@ -277,7 +277,7 @@ while True:
 
         elif recent_temp > st.session_state.temp_set:
             # if heater was previously on, turn it off
-            if st.session_state.temp_on:
+            if st.session_state.heat_on:
                 if heat.value:
                     heat.off()
 
