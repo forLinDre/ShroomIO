@@ -90,7 +90,7 @@ hum_tol = hum_expander.number_input(
 hum_fan = hum_expander.slider(
     label='Humidity Blower Duty Cycle',
     key='hum_fan',
-    min_value=0,
+    min_value=1,
     max_value=100,
     value=def_hum_dc,
     disabled=False if st.session_state.hum_control else True
@@ -251,7 +251,7 @@ while True:
         hum_dc = st.session_state.hum_fan
 
         if hum.hum_fan.value != hum_dc:
-            hum.hum_fan.frequency = hum_dc / 100
+            hum.hum_fan.value = hum_dc / 100
 
         if recent_hum < st.session_state.hum_set - st.session_state.hum_tol:
             # if humidifier wasn't triggered already, turn it on
@@ -269,7 +269,6 @@ while True:
                 if hum.fogger.value:
                     hum.fogger.off()
                 if hum.hum_fan.value > 0:
-                    # hum.hum_fan.frequency = 0
                     hum.hum_fan.off()
                 st.session_state.hum_on = False
     else:
@@ -277,7 +276,6 @@ while True:
             if hum.fogger.value:
                 hum.fogger.off()
             if hum.hum_fan.value > 0:
-                # hum.hum_fan.frequency = 0
                 hum.hum_fan.off()
             st.session_state.hum_on = False
 
