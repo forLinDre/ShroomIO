@@ -246,13 +246,15 @@ while True:
     recent_hum = round(env.data.iloc[-1].iloc[1], 2)
     recent_co2 = round(env.data.iloc[-1].iloc[2], 2)
 
-    temp_col.write(f'Temperature (deg. F): {recent_temp}')
-    hum_col.write(f'Relative Humidity: {recent_hum}')
-    co2_col.write(f'CO2 PPM: {recent_co2}')
+    with col1:
+        temp_col.write(f'Temperature (deg. F): {recent_temp}')
+        hum_col.write(f'Relative Humidity: {recent_hum}')
+        co2_col.write(f'CO2 PPM: {recent_co2}')
 
-    temp_status_col.write(f'Heater is on: {st.session_state.heat_on}')
-    hum_status_col.write(f'Humidifier is on: {st.session_state.hum_on}')
-    co2_status_col.write(f'FAE is on: {st.session_state.fae_on}')
+    with col2:
+        temp_status_col.write(f'Heater is on: {st.session_state.heat_on}')
+        hum_status_col.write(f'Humidifier is on: {st.session_state.hum_on}')
+        co2_status_col.write(f'FAE is on: {st.session_state.fae_on}')
 
     # light control
     if not st.session_state.manual_lc:
