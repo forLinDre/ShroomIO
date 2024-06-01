@@ -347,7 +347,7 @@ while True:
             if not circ.value:
                 circ.on()
 
-            st.session_state.hum_on = True
+            st.session_state.circ_on = True
 
     else:
         if st.session_state.circ_on:
